@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Balance</title>
+	</head>
+	<body>
+		<h1><a href="/home"><button>Home</button></a></h1><br><br>
+		<h1>See your balance below:</h1><br>
+		
+		<table border="1" style="width:600px">
+			<tr>
+				<th>Payer</th>
+				<th>Points</th>
+			</tr>
+			<tr th:each="bal : ${balance}">
+				<td th:text="${bal.key}"></td>
+				<td th:text="${bal.value}"></td>
+			</tr>
+		</table>
+		<br>
+		<a th:href="@{/transaction/add}"><button>Add Transaction</button></a><br>
+	</body>
+</html>

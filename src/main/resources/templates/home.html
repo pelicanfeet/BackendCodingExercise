@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Home</title>
+	</head>
+	<body>
+		<h1>Welcome!</h1>
+		<br><br>
+
+		<a th:href="@{/transaction/add}"><button>Add Transaction</button></a><br>
+		<a th:href="@{/points/spend}"><button>Spend Points</button></a><br>
+		<a th:href="@{/balance}"><button>Check Balance</button></a><br>
+
+	</body>
+</html>

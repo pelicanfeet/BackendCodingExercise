@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Point Spending Form</title>
+	</head>
+	<body>
+		<h1><a href="/home"><button>Home</button></a></h1><br><br>
+		<h1>Point Spending Form</h1><br>
+		<form action="#" th:action="@{/points/spend}" th:object="${pointSpend}" method="post">
+			<label for="points">How many points would you like to use?</label><br>
+			<input id="points" type="number" th:field="*{points}" placeholder="Points" name="points"/><br>
+
+			<p><button type="submit">Submit</button></p>
+		</form>
+		
+		<div th:if="${errorMsg != null}" th:text="${errorMsg}"></div>
+
+		<div th:switch="${spentPoints}">
+			<h2 th:case="null"></h2>
+			<div th:case="*">
+				<h2>Success!</h2><br>
+				<table border="1" style="width:600px">
+					<thead>
+						<tr>
+							<th scope="col">Payer</th>
+							<th scope="col">Points</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="spend : ${spentPoints}">
+							<td th:text="${spend.key}"></td>
+							<td th:text="'-' + ${spend.value}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>

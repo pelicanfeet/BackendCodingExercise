@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Transaction Form</title>
+	</head>
+	<body>
+		<h1><a href="/home"><button>Home</button></a></h1><br><br>
+		<h1>Transaction Form</h1><br>
+		<form action="#" th:action="@{/transaction/add}" th:object="${transaction}" method="post">
+			<label for="payer">Payer</label><br>
+			<input id="payer" type="text" th:field="*{payer}" placeholder="Payer" name="payer"/><br>
+			
+			<label for="points">Points</label><br>
+			<input id="points" type="number" th:field="*{points}" placeholder="Points" name="points"/><br>
+			
+			<label for="timestampString">Timestamp</label><br>
+			<input id="timestampString" type="text" th:field="*{timestampString}" placeholder="Timestamp" name="timestampString"/><br>
+			
+			<div th:if="${tsFormMsg != null}" th:text="${tsFormMsg}"></div>
+
+			<div th:if="${negBalMsg != null}" th:text="${negBalMsg}"></div>
+			
+			<p><button type="submit">Submit</button></p>
+		</form>
+	</body>
+</html>
