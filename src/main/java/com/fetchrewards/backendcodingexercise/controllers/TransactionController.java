@@ -26,7 +26,7 @@ public class TransactionController {
 	public String displayTransactionForm(Transaction transaction, Model model) {
 		return "transactionForm";
 	}
-	
+
 	@RequestMapping(value = "/transaction/add", method = RequestMethod.POST)
 	public String addTransaction(Transaction transaction, Model model) {
 		model.addAttribute("transaction", transaction);
@@ -38,6 +38,9 @@ public class TransactionController {
 			}
 		}
 		else if(transaction.getPoints() < 0) {
+			/* Display error message to inform user that their input was invalid because points
+			** are not allowed to go negative.
+			*/
 			String negBalMsg = "ERROR: Point balances cannot go negative.";
 			model.addAttribute("negBalMsg", negBalMsg);
 			return "transactionForm";
@@ -54,6 +57,7 @@ public class TransactionController {
 				transaction.setTimestamp(timestamp);
 			}
 			catch(Exception e) {
+				// Display error message to inform user that the Timestamp was input incorrectly.
 				String tsFormMsg = "ERROR: Timestamp was entered incorrectly.";
 				model.addAttribute("tsFormMsg", tsFormMsg);
 				return "transactionForm";
@@ -96,8 +100,16 @@ public class TransactionController {
 	
 	public Map<String, Integer> findOldestPoints(Map<String, Integer> map, int target) {
 		Map<String, Integer> result = new HashMap<>();
-		// Sort the transactions log by their timestamps (oldest comes first)
+		/* Sort the transactions log by their timestamps (oldest comes first), since we want
+		** to use the oldest points first.
+		*/
 		transactions.sort((t1, t2) -> t1.getTimestamp().compareTo(t2.getTimestamp()));
+		/* Then, for every Transaction t in transactions, we want to apply as many points as 
+		** possible from t's points towards the spend target. There are several cases which
+		** must be accounted for in this process, and they are below in the conditional structure.
+		** Note that the logic must take into consideration the fact that these logs may contain
+		** negative point values.
+		*/
 		for(Transaction t : transactions) {
 			while(target > 0 && t.getPoints() != 0) {
 				if(t.getPoints() < 0) {
