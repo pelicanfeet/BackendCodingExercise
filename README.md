@@ -17,7 +17,7 @@ This project was developed and tested using the Spring Tool Suite (STS) IDE.
 * Confirm the URI, Host, and Repository Path parameters and click Next
 * Choose the git branches to clone (should be 'master') and click Next
 * Confirm the directory into which the repository will be cloned and click Next
-* Choose the Maven project to import into Eclipse from Github and click Finish (this step may be unnecessary in STS because it may have already identified this as a Maven project)
+* Choose the Maven project to import into Eclipse from Github and click Finish (the first half of this step may be unnecessary in STS because it may have already identified this as a Maven project, so you may be able to just click Finish)
 
 # Running the application
 * Right click on the project folder in the Package Explorer window on the left, and choose "Run As > Spring Boot App"
