@@ -3,7 +3,7 @@ This is my solution for the Backend Take Home Test I received from Fetch Rewards
 This project was developed and tested using the Spring Tool Suite (STS) IDE.
 
 # Steps to configure environment
-* Ensure that Oracle JDK version 8 or newer is installed on the machine
+* Ensure that the latest version of Oracle JDK is installed on the machine
 * Eclipse IDE (https://www.eclipse.org/downloads/packages/)
 * Install Eclipse
 * Spring Tool Suite (https://spring.io/tools)
