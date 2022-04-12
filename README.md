@@ -1,6 +1,6 @@
 This is my solution for the Backend Take Home Test I received from Fetch Rewards.
 
-This project was developed and tested using the Spring Tool Suite (STS) IDE.
+This project was developed and tested using the Spring Tool Suite (STS) IDE and Google Chrome.
 
 # Steps to configure environment
 * Ensure that the latest version of Oracle JDK is installed on the machine
