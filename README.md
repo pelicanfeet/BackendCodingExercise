@@ -8,11 +8,16 @@ This project was developed and tested using the Spring Tool Suite (STS) IDE.
 * Install Eclipse
 * Spring Tool Suite (https://spring.io/tools)
 * Install Spring Tool Suite
+* Place the executable jar file in a folder and then double-click the jar file to run it
+* Open the folder that it places in that directory, and launch the Spring Tool Suite application
 
 # Checking out the code inside Spring Tool Suite
-* File > Import > Git > Projects from Git > 
+* File > Import > Git > Projects from Git (with smart import) > 
 * Clone URI > https://github.com/pelicanfeet/BackendCodingExercise.git
-* Important: Ensure the 3rd option is checked on the final screen to "Import as General Project"
+* Confirm the URI, Host, and Repository Path parameters and click Next
+* Choose the git branches to clone (should be 'master') and click Next
+* Confirm the directory into which the repository will be cloned and click Next
+* Choose the Maven project to import into Eclipse from Github and click Finish (this step may be unnecessary in STS because it may have already identified this as a Maven project)
 
 # Running the application
 * Right click on the project folder in the Package Explorer window on the left, and choose "Run As > Spring Boot App"
