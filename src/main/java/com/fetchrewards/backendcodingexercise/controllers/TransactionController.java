@@ -45,6 +45,7 @@ public class TransactionController {
 			model.addAttribute("negBalMsg", negBalMsg);
 			return "transactionForm";
 		}
+		// If a timestamp is not provided, use the current time. Otherwise, use the timestamp provided.
 		if(transaction.getTimestampString() == null || transaction.getTimestampString() == "") {
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 			transaction.setTimestamp(timestamp);
@@ -110,36 +111,40 @@ public class TransactionController {
 		** Note that the logic must take into consideration the fact that these logs may contain
 		** negative point values.
 		*/
-		for(Transaction t : transactions) {
-			while(target > 0 && t.getPoints() != 0) {
-				if(t.getPoints() < 0) {
-					if(result.containsKey(t.getPayer())) {
-						int posPoints = Math.abs(t.getPoints());
-						result.put(t.getPayer(), result.get(t.getPayer()) + t.getPoints());
-						balance.put(t.getPayer(), balance.get(t.getPayer()) + posPoints);
-						target += posPoints;
-						t.setPoints(0);
-					}
-				}
-				else if(t.getPoints() < target) {
-					target -= t.getPoints();
-					result.put(t.getPayer(), result.getOrDefault(t.getPayer(), 0) + t.getPoints());
-					balance.put(t.getPayer(), balance.getOrDefault(t.getPayer(), 0) - t.getPoints());
+		int size = transactions.size();
+		for(int i = 0; i < size; i++) {
+			Transaction t = transactions.get(i);
+			if(t.getPoints() < 0) {
+				if(result.containsKey(t.getPayer())) {
+					int posPoints = Math.abs(t.getPoints());
+					result.put(t.getPayer(), result.get(t.getPayer()) + t.getPoints());
+					balance.put(t.getPayer(), balance.get(t.getPayer()) + posPoints);
+					target += posPoints;
 					t.setPoints(0);
+					/* Now, we want to go back and find the earliest record to satisfy
+					** the spend request.
+					*/
+					i = 0;
 				}
-				else if(t.getPoints() > target) {
-					result.put(t.getPayer(), result.getOrDefault(t.getPayer(), 0) + target);
-					balance.put(t.getPayer(), balance.getOrDefault(t.getPayer(), 0) - target);
-					t.setPoints(t.getPoints() - target);
-					target = 0;
-				}
-				else { 
-					// t's points == target
-					result.put(t.getPayer(), result.getOrDefault(t.getPayer(), 0) + target);
-					balance.put(t.getPayer(), balance.getOrDefault(t.getPayer(), 0) - target);
-					t.setPoints(0);
-					target = 0;
-				}
+			}
+			else if(target > 0 && t.getPoints() < target) {
+				target -= t.getPoints();
+				result.put(t.getPayer(), result.getOrDefault(t.getPayer(), 0) + t.getPoints());
+				balance.put(t.getPayer(), balance.getOrDefault(t.getPayer(), 0) - t.getPoints());
+				t.setPoints(0);
+			}
+			else if(target > 0 && t.getPoints() > target) {
+				result.put(t.getPayer(), result.getOrDefault(t.getPayer(), 0) + target);
+				balance.put(t.getPayer(), balance.getOrDefault(t.getPayer(), 0) - target);
+				t.setPoints(t.getPoints() - target);
+				target = 0;
+			}
+			else if (target > 0){ 
+				// t's points == target
+				result.put(t.getPayer(), result.getOrDefault(t.getPayer(), 0) + target);
+				balance.put(t.getPayer(), balance.getOrDefault(t.getPayer(), 0) - target);
+				t.setPoints(0);
+				target = 0;
 			}
 		}
 		return result;
